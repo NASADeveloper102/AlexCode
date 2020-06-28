@@ -51,12 +51,6 @@ const ParseAndExecute = ( AlexCodeInput ) => {
         if(AlexCodeInput[i] == "}"){
             console.error("Not implimented yet");
         }
-        if(AlexCodeInput[i] == "("){
-            EvalString += "VariableArray[CurrentIndex] = function(){";
-        }
-        if(AlexCodeInput[i] == ")"){
-            EvalString += "}";
-        }
         if(AlexCodeInput[i] == "#"){
             EvalString += "VariableArray[CurrentIndex] += VariableArray[CopiedPointer];"
         }
@@ -76,16 +70,39 @@ const ParseAndExecute = ( AlexCodeInput ) => {
             EvalString += "VariableArray[CurrentIndex] *= VariableArray[CopiedPointer];";
         }
         if(AlexCodeInput[i] == "&"){
-            EvalString += "VariableArray[CurrentIndex]();"
+            EvalString += "document.getElementById('Output').value = '';";
         }
         if(AlexCodeInput[i] == "p"){
             EvalString += "document.getElementById('Output').value += CurrentString + '\\n'; CurrentString = '';"
         }
         if(AlexCodeInput[i] == "^"){
-            console.error("NOT IMPLIMENTED");
+            EvalString += "if(VariableArray[CopiedPointer] == 0){if(CurrentIndex + 1 != VariableArray.length){VariableArray[CurrentIndex + 1] = Math.sin(VariableArray[CurrentIndex]);}else{VariableArray[0] = Math.sin(VariableArray[CurrentIndex]);}}if(VariableArray[CopiedPointer] == 1){if(CurrentIndex + 1 != VariableArray.length){VariableArray[CurrentIndex + 1] = Math.cos(VariableArray[CurrentIndex]);}else{VariableArray[0] = Math.cos(VariableArray[CurrentIndex]);}}if(VariableArray[CopiedPointer] == 2){if(CurrentIndex + 1 != VariableArray.length){VariableArray[CurrentIndex + 1] = Math.tan(VariableArray[CurrentIndex]);}else{VariableArray[0] = Math.tan(VariableArray[CurrentIndex]);}}";
         }
+        if(AlexCodeInput[i] == "="){
+            EvalString += "VariableArray[CurrentIndex] = VariableArray[CopiedPointer];"
+        }
+        
     }
     document.getElementById('Output').value = "Output: \n";
     eval(EvalString);
 };
-
+setInterval(function(){
+    let StringText = "";
+    for(let i = 0; i < VariableArray.length; i++){
+        StringText += "|";
+        if(CopiedPointer == i){
+            StringText += "*";
+        } 
+        else{
+            StringText += " ";
+        }
+        StringText += VariableArray[i];
+        if(CurrentIndex == i){
+            StringText += "^";
+        }
+        else{
+            StringText == " ";
+        }
+    }
+    document.getElementById("Variables").value = StringText;
+}, 10);

@@ -7,8 +7,39 @@
 </head>
 <body style="background-color: black; overflow-y:hidden;">
     <textarea style="position:absolute; width: 69%; height: 50%; background-color:black; color:lightgreen; border: 2px solid green;" id="AlexCodeInput" cols="90" rows="20"></textarea> 
-    <div style="position:absolute; height:45%; width:69%; overflow-x:hidden; overflow-y: auto; top:53%; background-color:black; color:greeb; border:2px solid green;">
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><h1>fdsafds</h1>
+    <textarea id="Variables" cols="30" rows="10" style="position: absolute; width: 35%; height: 45%; border: 1px solid green; top: 53%; left: 35%; background-color:black; color:lightgreen;" readonly></textarea>
+    <div style="position:absolute; height:45%; width:34%; overflow-x:hidden; overflow-y: auto; top:53%; background-color:black; color:green; border:2px solid green;">
+        <h1>Documentation</h1>
+        <h3>Overall</h3>
+        <p>The objective of this is to have a language similar to brainF, but have a math and canvas extention.</p>
+        <h3>+ or a</h3>
+        <p>Add one to the current buffer.</p>
+        <h3>- or s</h3>
+        <p>Subtract one from the current buffer.</p>
+        <h3>l or {Less Than} </h3>
+        <p>Move one buffer to the left, if the buffer is the first one then you move to the last one.</p>
+        <h3>r or {Greater Than}</h3>
+        <p>Move one buffer to the right, if the buffer is the last one then you move to the first one.</p>
+        <h3>~</h3>
+        <p>Copies the buffer index into a variable to be accessed later</p>
+        <h3>=</h3>
+        <p>Copies the buffer index that was copied into the one that is targetted currently.</p>
+        <h3>()</h3>
+        <p>Creates a function at the targetted buffer</p>
+        <h3>& or R</h3>
+        <p>Runs the function at the current spot</p>
+        <h3>[]</h3>
+        <p>While loop that keeps going until the current index is 1</p>
+        <h3>#</h3>
+        <p>Add the copied buffer's value to the current one</p>
+        <h3>?</h3>
+        <p>Subtract the copied buffer's value to the current one</p>
+        <h3>=</h3>
+        <p>Pastes the value from the copied buffer into the current one</p>
+        <h3>$</h3>
+        <p>Clears the buffer</p>
+        <h3>^</h3>
+        <p>Does a trig function based on two parts. The identifying number and the input. The identifying number is a number 0 - 2. 0 = Sine, 1 = Cosine, 2 = Tangent. This number is the value of the copied buffer index. The second value is the input, which is the current index. That is the value you put inside of that function. The output is the index to the very right of that.</p>
     </div>
     <textarea id="Output" cols="40" rows="40" style="position:absolute; left:70%; width:28%; background-color:black; color:lightgreen; height:98%;border:2px solid green;" readonly> </textarea>
     <div style="position: absolute; left: 61%; top: 3%; color:black; background-color:green; border:1px solid green; width:6%; height: 6%; text-align: center;" onclick="ParseAndExecute(document.getElementById('AlexCodeInput').value);"><p style="top:0px;">Execute</p></div>
