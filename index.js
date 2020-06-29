@@ -7,10 +7,20 @@ let CopiedIndex = undefined;
 let CodeIndex = 0;
 let CodeString;
 let codeInterval = undefined;
-let DrawObject = {};
+let DrawObject = {Vertices : [], Colors : []};
 let Vertices = 0;
 let CurrentDraw = "";
+let ExSpeed = 400;
+let Characters = [];
+let canvas = document.querySelector("#Canvas");
+let ctx = canvas.getContext('2d');
+
+
 const Clear = () => {
+    CurrentIndex = 0;
+    CurrentDraw = "";
+    CopiedIndex = undefined;
+    CodeIndex = 0;
     BufferArray = [];
     for(let i = 0; i < 10; i++){
         BufferArray.push(0);
@@ -38,22 +48,30 @@ const UpdateBuffer = () => {
 };
 
 const Execute = (char, index) => {
-    if(char == "+"){
+    if(char == "\\"){
+        for(let i = CodeIndex; i < CodeString.length; i++){
+            if(CodeString[i] == "\\"){
+                CodeIndex = i;
+                
+            }
+        }
+    }
+    if(char == "a"){
         BufferArray[CurrentIndex]++;
         UpdateBuffer();
     }
-    if(char == "-"){
+    if(char == "s"){
         BufferArray[CurrentIndex]--;
         UpdateBuffer();
     }
-    if(char == "<"){
+    if(char == "l"){
         CurrentIndex--;
         if(CurrentIndex == -1){
             CurrentIndex = BufferArray.length;
         }
         UpdateBuffer();
     }
-    if(char == ">"){
+    if(char == "r"){
         CurrentIndex++;
         if(CurrentIndex == BufferArray.length){
             CurrentIndex = 0;
@@ -95,70 +113,81 @@ const Execute = (char, index) => {
             CodeIndex = OpenWhileLoopIDs[OpenWhileLoopIDs.length - 1];
         }
     }
-    if(char == "."){
+    if(char == "p"){
         document.getElementById('Output').value += String.fromCharCode(BufferArray[CurrentIndex]);
     }
-    if(char == ","){
+    if(char == "i"){
         BufferArray[CurrentIndex] = prompt().charCodeAt(0);
         UpdateBuffer();
     }
-    if(char == ","){
-        BufferArray[CurrentIndex] = prompt().charCodeAt(0);
-        UpdateBuffer();
-    }
-    if(char == "#"){
+    if(char == "c"){
         $("canvas").clearCanvas();
     }
-    if(char == "@"){
-        Vertices++;
-        DrawObject["x" + Vertices] = BufferArray[CopiedIndex];
-        DrawObject["y" + Vertices] = BufferArray[CurrentIndex];
+    if(char == "L"){
+        ctx.lineTo(BufferArray[CurrentIndex], BufferArray[CopiedIndex]);
     }
-    if(char == "%"){
-        if(CurrentDraw == "LINE"){
-            if(DrawObject["strokeStyle"] == undefined){
-                DrawObject["strokeStyle"] = "#";
-            }
-            DrawObject["strokeStyle"] += BufferArray[CurrentIndex];
-        }
-        else{
-            if(DrawObject["fillStyle"] == undefined){
-                DrawObject["fillStyle"] = "#";
-            }
-            DrawObject["fillStyle"] += BufferArray[CurrentIndex];
-        }
+    if(char == "C"){
+        DrawObject.Colors.push(BufferArray[CurrentIndex]);
     }
-    if(char == "&"){
-        DrawObject["strokeWidth"] = BufferArray[CurrentIndex];
+    if(char == "W"){
+        ctx.lineWidth = BufferArray[CurrentIndex];
     }
-    if(char == "!"){
-        if(CurrentDraw == "LINE")
-            DrawObject["closed"] = true;
-            $("canvas").drawLine(DrawObject);
-        else{
-            $('canvas').drawPolygon(DrawObject);
-        }
+    if(char == "S"){
+        ctx.strokeStyle = "rgb(" + DrawObject.Colors[0].toString() + ", " + DrawObject.Colors[1].toString() + ", " + DrawObject.Colors[2].toString() + ")";
     }
-    if(char == "?"){
-        if(CurrentDraw == "LINE")
-            $("canvas").drawLine(DrawObject);
-        else{
-            $("canvas").drawPolygon(DrawObject);
-        }
+    if(char == "F"){
+        ctx.fillStyle = "rgb(" + DrawObject.Colors[0] + ", " + DrawObject.Colors[1] + ", " + DrawObject.Colors[2] + ")";
+    }
+    if(char == "{"){
+        ctx.beginPath();
+    }
+    if(char == "}"){
+        ctx.fill();
+    }
+    if(char == "M"){
+        ctx.moveTo(BufferArray[CurrentIndex], BufferArray[CopiedIndex]);
     }
     if(char == "~"){
         CopiedIndex = CurrentIndex;
     }
-    if(char == "`"){
+    if(char == "E"){
+        ExSpeed = BufferArray[CurrentIndex];
+    }
+    if(char == "d"){
+        BufferArray[CurrentIndex] = BufferArray[CurrentIndex]/BufferArray[CopiedIndex];
+        UpdateBuffer();
+    }
+    if(char == "m"){
+        BufferArray[CurrentIndex] = BufferArray[CurrentIndex] * BufferArray[CopiedIndex];
+        UpdateBuffer();
 
     }
+    if(char == "'"){
+        BufferArray[CurrentIndex] = Math.pow(BufferArray[CurrentIndex], 2);
+        UpdateBuffer();
+    }
+    if(char == '"'){
+        BufferArray[CurrentIndex] = Math.sqrt(BufferArray[CurrentIndex]);
+        UpdateBuffer();
+    }
+    if(char == "B"){
+        for(let i = 0; i < BufferArray[CurrentIndex]; i++){
+            BufferArray.push(0);
+        }
+        UpdateBuffer();
+    }
+    if(char == "V"){
+        BufferArray[CurrentIndex] = BufferArray[CopiedIndex];
+        UpdateBuffer();
+    }
     CodeIndex++;
-    if(CodeIndex + 1 <= $("#CodeInput").val().length){
-        setTimeout(function(){Execute($("#CodeInput").val()[CodeIndex], CodeIndex)}, 400);
+    if(CodeIndex + 1 <= CodeString.length){
+        setTimeout(function(){Execute(CodeString[CodeIndex], CodeIndex)}, ExSpeed);
     }
 };
 
 $("#ActionButton").click((event) => {
     Clear();
-    Execute($("#CodeInput").val()[CodeIndex], CodeIndex);
+    CodeString = $("#CodeInput").val();
+    Execute(CodeInput[0], CodeIndex);
 });
