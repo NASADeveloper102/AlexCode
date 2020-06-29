@@ -22,6 +22,9 @@ const Clear = () => {
     CopiedIndex = undefined;
     CodeIndex = 0;
     BufferArray = [];
+    ExSpeed = 100;
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, 870, 500);
     for(let i = 0; i < 10; i++){
         BufferArray.push(0);
     }
@@ -56,22 +59,22 @@ const Execute = (char, index) => {
             }
         }
     }
-    if(char == "a"){
+    if(char == "+" || char == "a"){
         BufferArray[CurrentIndex]++;
         UpdateBuffer();
     }
-    if(char == "s"){
+    if(char == "-" || char == "s"){
         BufferArray[CurrentIndex]--;
         UpdateBuffer();
     }
-    if(char == "l"){
+    if(char == "<" || char == "l"){
         CurrentIndex--;
         if(CurrentIndex == -1){
             CurrentIndex = BufferArray.length;
         }
         UpdateBuffer();
     }
-    if(char == "r"){
+    if(char == ">" || char == "r"){
         CurrentIndex++;
         if(CurrentIndex == BufferArray.length){
             CurrentIndex = 0;
@@ -113,10 +116,10 @@ const Execute = (char, index) => {
             CodeIndex = OpenWhileLoopIDs[OpenWhileLoopIDs.length - 1];
         }
     }
-    if(char == "p"){
+    if(char == "." || char == "p"){
         document.getElementById('Output').value += String.fromCharCode(BufferArray[CurrentIndex]);
     }
-    if(char == "i"){
+    if(char == "," || char == "i"){
         BufferArray[CurrentIndex] = prompt().charCodeAt(0);
         UpdateBuffer();
     }
