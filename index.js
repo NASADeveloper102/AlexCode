@@ -1,6 +1,8 @@
 let BufferArray = [];
 let OpenWhileLoopIDs = [];
 let ClosedWhileLoopIDs = [];
+let OpenFunctionIDs = [];
+let ClosedFunctionIDs = [];
 let IfIDs = [];
 let CurrentIndex = 0;
 let CopiedIndex = undefined;
@@ -14,7 +16,12 @@ let ExSpeed = 400;
 let Characters = [];
 let canvas = document.querySelector("#Canvas");
 let ctx = canvas.getContext('2d');
+let place = undefined;
+let lastKeyPressed = undefined;
 
+document.addEventListener('keydown', function(event){
+    lastKeyPressed = event.which;
+});
 
 const Clear = () => {
     CurrentIndex = 0;
@@ -22,7 +29,7 @@ const Clear = () => {
     CopiedIndex = undefined;
     CodeIndex = 0;
     BufferArray = [];
-    ExSpeed = 100;
+    ExSpeed = 400;
     ctx.fillStyle = "#000000";
     document.getElementById("Output").value = "";
     ctx.fillRect(0, 0, 870, 500);
@@ -104,7 +111,7 @@ const Execute = (char, index) => {
     }
     if(char == "]"){
         if(OpenWhileLoopIDs[OpenWhileLoopIDs.length - 1] != undefined && ClosedWhileLoopIDs[OpenWhileLoopIDs.length - 1] != undefined){
-            if(BufferArray[CurrentIndex] == 0){
+            if(BufferArray[CurrentIndex] != 0){
                 delete OpenWhileLoopIDs[OpenWhileLoopIDs.length - 1];
                 delete ClosedWhileLoopIDs[OpenWhileLoopIDs.length - 1];
             }
@@ -126,6 +133,12 @@ const Execute = (char, index) => {
     }
     if(char == "c"){
         $("canvas").clearCanvas();
+    }
+    if(char == "Z"){
+        BufferArray = [];
+        for (var i = 0; i < 10; i++) {
+            BufferArray.push(0);
+        }
     }
     if(char == "L"){
         ctx.lineTo(BufferArray[CurrentIndex], BufferArray[CopiedIndex]);
@@ -182,6 +195,32 @@ const Execute = (char, index) => {
     }
     if(char == "V"){
         BufferArray[CurrentIndex] = BufferArray[CopiedIndex];
+        UpdateBuffer();
+    }
+    if(char == ")"){
+        CodeIndex = place;
+    }
+    if(char == "("){
+        OpenFunctionIDs.push([CodeIndex, BufferArray[CurrentIndex]]);
+        for(let i = CodeIndex; i < CodeString.length; i++){
+            if(CodeString[i] == ")"){
+                ClosedFunctionIDs.push([i, BufferArray[CurrentIndex]]);
+                CodeIndex = i;
+            }
+        }
+    }
+    if(char == "R"){
+        let found = false;
+        for(let i = 0; i < OpenFunctionIDs.length; i++){
+            if(OpenFunctionIDs[i][1] == BufferArray[CurrentIndex] && found == false){
+                place = CodeIndex;
+                CodeIndex = OpenFunctionIDs[i][0];
+                found = true;
+            }
+        }
+    }
+    if(char == "k"){
+        BufferArray[CurrentIndex] = lastKeyPressed;
         UpdateBuffer();
     }
     CodeIndex++;
