@@ -36,6 +36,7 @@ const Clear = () => {
     for(let i = 0; i < 10; i++){
         BufferArray.push(0);
     }
+    BufferArray[0] = 1;
 };
 
 const UpdateBuffer = () => {
