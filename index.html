@@ -29,6 +29,7 @@
                 position: absolute;
                 margin:0px;
                 overflow-y: auto;
+                color:white;
             }
             #Output{
                 width: 34%;
@@ -54,8 +55,8 @@
             }
             #ActionButton{
                 width: 8%;
-                height: 3%;
                 left: 26%;
+                top: 68%;
                 background-color: black;
                 border: 1px solid green;
                 color: lightgreen;
@@ -81,9 +82,20 @@
         <textarea id="CodeInput" placeholder="Code goes here">aaaaaa'~raaaaaaaaaaEmaaaaaCCCFraaaaa~raaaaaaaaaam~rV{Mraaa~llmr~lLrrraaaaaaaaaa'lll~rrrLll~rrrVL}</textarea>
         <textarea id="Output" placeholder="Output:" readonly></textarea>
         <textarea id="Buffer" placeholder="Buffer is here" readonly></textarea>
-        <div id="ActionButton"><p id = "ButtonText">Execute</p></div>
-        <div id = "Docs"></div>
+        
+        <div id = "Docs">
+                a - adds one to the current index in the buffer
+                <br>
+                s - subtracts one to the current index in the buffer
+<br>
+r - moves right in the buffer
+<br>
+l - moves left in the buffer
+<br>
+' - squares what is currently in the buffer and sets it to that value
+        </div>
         <canvas id = "Canvas"></canvas>
+        <div id="ActionButton"><p id = "ButtonText">Execute</p></div>
     </body>
     <script type="text/javascript" src="index.js"></script>
 </html>
