@@ -24,6 +24,7 @@ const Clear = () => {
     BufferArray = [];
     ExSpeed = 100;
     ctx.fillStyle = "#000000";
+    doument.getElementById("Output").value = "";
     ctx.fillRect(0, 0, 870, 500);
     for(let i = 0; i < 10; i++){
         BufferArray.push(0);
