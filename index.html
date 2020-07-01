@@ -5,7 +5,7 @@
         <style type="text/css">
             #CodeInput{
                 width: 35%;
-                height: 65%;
+                height: 56%;
                 background-color: black;
                 color: lightgreen;
                 border: 1px solid green;
@@ -54,9 +54,21 @@
                 color: lightgreen;
             }
             #ActionButton{
-                width: 8%;
-                left: 26%;
-                top: 68%;
+                width: 15%;
+                left: 2%;
+                top: 58%;
+                background-color: black;
+                border: 1px solid green;
+                color: lightgreen;
+                position: absolute;
+                text-align: center;
+                font-size: 23px;
+                cursor: pointer;
+            }
+            #BinaryButton{
+                width: 15%;
+                left: 19%;
+                top: 58%;
                 background-color: black;
                 border: 1px solid green;
                 color: lightgreen;
@@ -79,7 +91,7 @@
         <script type="text/javascript" src="jcanvas.min.js"></script>
     </head>
     <body>
-        <textarea id="CodeInput" placeholder="Code goes here">aaaaaa'~raaaaaaaaaaEmaaaaaCCCFraaaaa~raaaaaaaaaam~rV{Mraaa~llmr~lLrrraaaaaaaaaa'lll~rrrLll~rrrVL}</textarea>
+        <textarea id="CodeInput" placeholder="Code goes here">aaaaa'~raaaaaaaaaaEmaaaaaCCCFraaaaa~raaaaaaaaaam~rV{Mraaa~llmr~lLrrraaaaaaaaaa'lll~rrrLll~rrrVL}</textarea>
         <textarea id="Output" placeholder="Output:" readonly></textarea>
         <textarea id="Buffer" placeholder="Buffer is here" readonly></textarea>
         
@@ -87,15 +99,18 @@
                 a - adds one to the current index in the buffer
                 <br>
                 s - subtracts one to the current index in the buffer
-<br>
-r - moves right in the buffer
-<br>
-l - moves left in the buffer
-<br>
-' - squares what is currently in the buffer and sets it to that value
+                <br>
+                r - moves right in the buffer
+                <br>
+                l - moves left in the buffer
+                <br>
+                " - Square roots what is currently in the buffer and sets it to that value
+                <br>
+                ' - squares what is currently in the buffer and sets it to that value
         </div>
         <canvas id = "Canvas"></canvas>
-        <div id="ActionButton"><p id = "ButtonText">Execute</p></div>
+        <div id="ActionButton"><p id = "ButtonText">Execute AlexCode</p></div>
+        <div id="BinaryButton"><p id = "ButtonText">Execute AlexBinary</p></div>
     </body>
     <script type="text/javascript" src="index.js"></script>
 </html>
